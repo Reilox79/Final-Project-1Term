@@ -5,7 +5,7 @@ const BASE_URL = "https://swapi.dev/api"
 
 function getIdFromUrl(url) {
     const parts = url.split("/").filter(Boolean); //With .filter we remove all the empty spaces
-    return parts[parts.lenght - 1];
+    return parts[parts.length - 1];
 }
 
 export async function getPeople(page = 1) {
@@ -25,7 +25,7 @@ export async function getPeople(page = 1) {
 }
 
 export async function getPersonById(id) {
-    const response = await fetch(await fetch(`${BASE_URL}/people/${id}/`));
+    const response = await fetch(`${BASE_URL}/people/${id}/`);
     if(!response.ok) throw new Error("Error fetching person");
 
     const data = await response.json();
