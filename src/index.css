@@ -1,0 +1,22 @@
+:root {
+  --color-bg: #0b0d17;
+  --color-surface: #151826;
+  --color-border: #2a2f45;
+  --color-accent: #ffe81f;
+  --color-text: #e6e6e6;
+  --color-text-muted: #9aa0b5;
+  --color-error: #ff5252;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
