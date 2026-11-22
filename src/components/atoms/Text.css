@@ -1,0 +1,17 @@
+.text {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.text--normal {
+  color: var(--color-text);
+}
+
+.text--muted {
+  color: var(--color-text-muted);
+}
+
+.text--strong {
+  color: var(--color-text);
+  font-weight: 700;
+}

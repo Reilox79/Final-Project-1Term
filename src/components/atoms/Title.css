@@ -1,0 +1,19 @@
+.title {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.title--small {
+  font-size: 1.1rem;
+}
+
+.title--medium {
+  font-size: 1.6rem;
+}
+
+.title--large {
+  font-size: 2.4rem;
+}
