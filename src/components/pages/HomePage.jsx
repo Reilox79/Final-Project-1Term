@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
 import { getPeople } from "../../services/api";
+import PersonCard from "../molecules/PersonCard";
+import Pagination from "../molecules/Pagination";
+import Spinner from "../atoms/Spinner";
+import ErrorMessage from "../atoms/ErrorMessage";
 
 function HomePage({ onSelect }) {
   const [people, setPeople] = useState([]);
@@ -26,25 +30,22 @@ function HomePage({ onSelect }) {
     setPage(newPage);
   }
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <Spinner />;
+  if (error) return <ErrorMessage message={error} />;
 
   return (
     <div>
-      <ul>
+      <div>
         {people.map((person) => (
-          <li key={person.id}>
-            <button onClick={() => onSelect(person.id)}>{person.name}</button>
-          </li>
+          <PersonCard key={person.id} person={person} onSelect={onSelect} />
         ))}
-      </ul>
-      <button disabled={!hasPrevious} onClick={() => changePage(page - 1)}>
-        Previous
-      </button>
-      <span> Page {page} </span>
-      <button disabled={!hasNext} onClick={() => changePage(page + 1)}>
-        Next
-      </button>
+      </div>
+      <Pagination
+        page={page}
+        hasNext={hasNext}
+        hasPrevious={hasPrevious}
+        onPageChange={changePage}
+      />
     </div>
   );
 }

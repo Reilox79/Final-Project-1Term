@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
 import { getPersonById } from "../../services/api";
+import Button from "../atoms/Button";
+import Title from "../atoms/Title";
+import Spinner from "../atoms/Spinner";
+import ErrorMessage from "../atoms/ErrorMessage";
+import InfoRow from "../molecules/InfoRow";
 
 function DetailPage({ id, onBack }) {
   const [person, setPerson] = useState(null);
@@ -15,15 +20,19 @@ function DetailPage({ id, onBack }) {
 
   return (
     <div>
-      <button onClick={onBack}>Back</button>
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
+      <Button onClick={onBack}>← Back</Button>
+      {loading && <Spinner />}
+      {error && <ErrorMessage message={error} />}
       {person && (
         <div>
-          <h2>{person.name}</h2>
-          <p>Height: {person.height}</p>
-          <p>Mass: {person.mass}</p>
-          <p>Birth year: {person.birth_year}</p>
+          <Title level={2}>{person.name}</Title>
+          <InfoRow label="Height" value={person.height} />
+          <InfoRow label="Mass" value={person.mass} />
+          <InfoRow label="Hair color" value={person.hair_color} />
+          <InfoRow label="Skin color" value={person.skin_color} />
+          <InfoRow label="Eye color" value={person.eye_color} />
+          <InfoRow label="Birth year" value={person.birth_year} />
+          <InfoRow label="Gender" value={person.gender} />
         </div>
       )}
     </div>
