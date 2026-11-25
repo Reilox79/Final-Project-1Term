@@ -1,0 +1,33 @@
+.meal-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 0.8rem;
+  font: inherit;
+  text-align: left;
+  color: inherit;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.meal-card:hover,
+.meal-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: var(--color-accent);
+  outline: none;
+}
+
+.meal-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.meal-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}

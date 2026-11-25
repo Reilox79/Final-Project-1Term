@@ -9,14 +9,10 @@
   border: 1px solid currentColor;
 }
 
-.badge--male {
-  color: #4fc3f7;
+.badge--category {
+  color: var(--color-accent);
 }
 
-.badge--female {
-  color: #f48fb1;
-}
-
-.badge--neutral {
-  color: var(--color-text-muted);
+.badge--area {
+  color: #7cc47f;
 }

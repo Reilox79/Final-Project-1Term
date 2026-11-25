@@ -1,8 +1,8 @@
 import "./Badge.css";
 
-// modifier: "male" | "female" | "neutral"
-function Badge({ children, modifier = "neutral" }) {
-  return <span className={`badge badge--${modifier}`}>{children}</span>;
+// variant: "category" | "area"
+function Badge({ children, variant = "category" }) {
+  return <span className={`badge badge--${variant}`}>{children}</span>;
 }
 
 export default Badge;

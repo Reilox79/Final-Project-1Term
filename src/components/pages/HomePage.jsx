@@ -1,52 +1,50 @@
 import { useState, useEffect } from "react";
-import { getPeople } from "../../services/api";
-import PersonCard from "../molecules/PersonCard";
+import { getMealsByLetter } from "../../services/api";
+import MainTemplate from "../templates/MainTemplate";
+import MealList from "../organisms/MealList";
 import Pagination from "../molecules/Pagination";
 import Spinner from "../atoms/Spinner";
 import ErrorMessage from "../atoms/ErrorMessage";
 
+const LETTERS = "abcdefghijklmnopqrstuvwxyz".split("");
+
 function HomePage({ onSelect }) {
-  const [people, setPeople] = useState([]);
-  const [page, setPage] = useState(1);
-  const [hasNext, setHasNext] = useState(false);
-  const [hasPrevious, setHasPrevious] = useState(false);
+  const [meals, setMeals] = useState([]);
+  const [letterIndex, setLetterIndex] = useState(0); // 0 = "a"
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const letter = LETTERS[letterIndex];
+
+  // Runs at the start and every time the letter changes
   useEffect(() => {
-    getPeople(page)
+    getMealsByLetter(letter)
       .then((data) => {
-        setPeople(data.people);
-        setHasNext(data.hasNext);
-        setHasPrevious(data.hasPrevious);
+        setMeals(data);
         setError(null);
       })
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
-  }, [page]);
+  }, [letter]);
 
-  function changePage(newPage) {
+  function changeLetter(newIndex) {
     setLoading(true);
-    setPage(newPage);
+    setLetterIndex(newIndex);
   }
 
-  if (loading) return <Spinner />;
-  if (error) return <ErrorMessage message={error} />;
-
   return (
-    <div>
-      <div>
-        {people.map((person) => (
-          <PersonCard key={person.id} person={person} onSelect={onSelect} />
-        ))}
-      </div>
+    <MainTemplate>
       <Pagination
-        page={page}
-        hasNext={hasNext}
-        hasPrevious={hasPrevious}
-        onPageChange={changePage}
+        label={`Letter ${letter.toUpperCase()}`}
+        hasPrevious={letterIndex > 0}
+        hasNext={letterIndex < LETTERS.length - 1}
+        onPrevious={() => changeLetter(letterIndex - 1)}
+        onNext={() => changeLetter(letterIndex + 1)}
       />
-    </div>
+      {loading && <Spinner />}
+      {error && <ErrorMessage message={error} />}
+      {!loading && !error && <MealList meals={meals} onSelect={onSelect} />}
+    </MainTemplate>
   );
 }
 

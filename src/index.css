@@ -1,10 +1,10 @@
 :root {
-  --color-bg: #0b0d17;
-  --color-surface: #151826;
-  --color-border: #2a2f45;
-  --color-accent: #ffe81f;
-  --color-text: #e6e6e6;
-  --color-text-muted: #9aa0b5;
+  --color-bg: #1b1410;
+  --color-surface: #2a201a;
+  --color-border: #43352b;
+  --color-accent: #ffa94d;
+  --color-text: #f3ece6;
+  --color-text-muted: #b8a99c;
   --color-error: #ff5252;
 }
 

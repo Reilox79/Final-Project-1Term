@@ -1,41 +1,31 @@
 import { useState, useEffect } from "react";
-import { getPersonById } from "../../services/api";
+import { getMealById } from "../../services/api";
+import MainTemplate from "../templates/MainTemplate";
+import MealDetail from "../organisms/MealDetail";
 import Button from "../atoms/Button";
-import Title from "../atoms/Title";
 import Spinner from "../atoms/Spinner";
 import ErrorMessage from "../atoms/ErrorMessage";
-import InfoRow from "../molecules/InfoRow";
 
 function DetailPage({ id, onBack }) {
-  const [person, setPerson] = useState(null);
+  const [meal, setMeal] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Runs when the page opens (and if the id changes)
   useEffect(() => {
-    getPersonById(id)
-      .then((data) => setPerson(data))
+    getMealById(id)
+      .then((data) => setMeal(data))
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
   }, [id]);
 
   return (
-    <div>
+    <MainTemplate>
       <Button onClick={onBack}>← Back</Button>
       {loading && <Spinner />}
       {error && <ErrorMessage message={error} />}
-      {person && (
-        <div>
-          <Title level={2}>{person.name}</Title>
-          <InfoRow label="Height" value={person.height} />
-          <InfoRow label="Mass" value={person.mass} />
-          <InfoRow label="Hair color" value={person.hair_color} />
-          <InfoRow label="Skin color" value={person.skin_color} />
-          <InfoRow label="Eye color" value={person.eye_color} />
-          <InfoRow label="Birth year" value={person.birth_year} />
-          <InfoRow label="Gender" value={person.gender} />
-        </div>
-      )}
-    </div>
+      {meal && <MealDetail meal={meal} />}
+    </MainTemplate>
   );
 }
 

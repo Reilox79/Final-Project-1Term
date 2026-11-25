@@ -1,34 +1,37 @@
-const BASE_URL = "https://swapi.dev/api"
+const BASE_URL = "https://www.themealdb.com/api/json/v1/1";
 
-// SWAPI does not return an id, so we take it from the url
-// "https://swapi.dev/api/people/1/" → "1"
+// List of meals whose name starts with a letter
+// GET /search.php?f=a
+export async function getMealsByLetter(letter) {
+  const response = await fetch(`${BASE_URL}/search.php?f=${letter}`);
+  if (!response.ok) throw new Error("Error fetching meals");
 
-function getIdFromUrl(url) {
-    const parts = url.split("/").filter(Boolean); //With .filter we remove all the empty spaces
-    return parts[parts.length - 1];
+  const data = await response.json();
+  // If there are no meals, the API returns { meals: null }
+  return data.meals || [];
 }
 
-export async function getPeople(page = 1) {
-    const response = await fetch(`${BASE_URL}/people?page=${page}`);
-    if(!response.ok) throw new Error("Error fetching people");
+// One meal by its id
+// GET /lookup.php?i=52772
+export async function getMealById(id) {
+  const response = await fetch(`${BASE_URL}/lookup.php?i=${id}`);
+  if (!response.ok) throw new Error("Error fetching meal");
 
-    const data = await response.json();
+  const data = await response.json();
+  if (!data.meals) throw new Error("Meal not found");
 
-    return {
-        people: data.results.map((person) => ({
-            ...person,
-            id:getIdFromUrl(person.url),
-        })),
-        hasNext: data.next !== null,
-        hasPrevious: data.previous !== null,
-    };
-}
+  const meal = data.meals[0];
 
-export async function getPersonById(id) {
-    const response = await fetch(`${BASE_URL}/people/${id}/`);
-    if(!response.ok) throw new Error("Error fetching person");
+  // The API gives the ingredients in 20 separate fields
+  // (strIngredient1...strIngredient20), so we join them in one array
+  const ingredients = [];
+  for (let i = 1; i <= 20; i++) {
+    const name = meal[`strIngredient${i}`];
+    const measure = meal[`strMeasure${i}`];
+    if (name && name.trim() !== "") {
+      ingredients.push({ name, measure });
+    }
+  }
 
-    const data = await response.json();
-
-    return { ...data, id };
+  return { ...meal, ingredients };
 }
