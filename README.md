@@ -8,8 +8,9 @@ Repository: https://github.com/Reilox79/Final-Project-1Term
 
 ## Group members
 
-- _Full name of student 1_ (Rafa)
-- _Full name of student 2_ (Mario)
+- _Mario Garcia Oliva_ 
+- _Rafa Lora Calero_
+- _Fernando Ortega Lomeli_
 
 ## Chosen API
 
